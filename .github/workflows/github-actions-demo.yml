@@ -24,8 +24,11 @@ jobs:
       # Step 3: Install Python dependencies
       - name: Install Python dependencies
         run: |
+          echo "[I] Starting installing python requirements..."
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          echo "[I] installation finished"
+        working-directory: backend
 
       # Step 4: Set up Node.js
       - name: Set up Node.js
@@ -35,8 +38,16 @@ jobs:
 
       # Step 5: Install frontend dependencies
       - name: Install frontend dependencies
-        run: npm install
-
+        run: |
+          echo "[I] Starting installing dependencies..."
+          npm install
+          echo "[I] installation finished"
+        working-directory: frontend
+      
       # Step 6: Build frontend
       - name: Build frontend
-        run: npm run build
+        run: |
+          echo "[I] Start building..."
+          npm run build
+          echo "[I] building finished."
+        working-directory: frontend
