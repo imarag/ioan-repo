@@ -10,10 +10,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
     steps:
       # Step 1: Checkout the code
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
 
       # Step 2: Set up Python
       - name: Set up Python
@@ -52,3 +62,9 @@ jobs:
           npm run build
           echo "[I] building finished."
         working-directory: frontend
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v8.1.0 # x-release-please-version
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
