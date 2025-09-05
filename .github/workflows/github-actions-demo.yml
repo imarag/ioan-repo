@@ -48,6 +48,7 @@ jobs:
       - name: Build frontend
         run: |
           echo "[I] Start building..."
+          mkdir nada
           npm run build
           echo "[I] building finished."
         working-directory: frontend
